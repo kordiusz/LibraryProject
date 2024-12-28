@@ -1,0 +1,26 @@
+
+*{
+    -fx-font-family: "Lucida Console";
+}
+
+.logo-text{
+    -fx-font-size: 15;
+    -fx-text-fill: white;
+}
+
+
+
+.toolbar{
+    -fx-border-style: solid;
+    -fx-padding: 5;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: black;
+
+}
+
+.bookRentalPanel{
+    -fx-font-size: 13;
+}
+.userViewText{
+    -fx-padding: 0 0 10 10;
+}

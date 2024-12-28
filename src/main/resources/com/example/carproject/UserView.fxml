@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.TextFlow?>
+<?import org.kordamp.bootstrapfx.scene.layout.Panel?>
+<?import javafx.scene.text.Text?>
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.carproject.UserViewController"
+            prefHeight="400.0" prefWidth="600.0">
+    <HBox spacing="10" styleClass="toolbar">
+        <!-- Logo -->
+        <ImageView fitWidth="32" fitHeight="32">
+            <Image url="@/logo.png"/>
+        </ImageView>
+
+        <!-- Title -->
+        <VBox alignment="CENTER_LEFT" styleClass="logo-text">
+            <Label text="Igor's Library" styleClass="h4 text-white" />
+        </VBox>
+
+        <!-- Spacer -->
+        <Region HBox.hgrow="ALWAYS" />
+
+        <!-- Example of right-aligned content (optional) -->
+        <TextArea prefHeight="5" prefWidth="100"/>
+        <Button text="Search"/>
+    </HBox>
+
+    <VBox>
+        <HBox styleClass="bookRentalPanel, alert, alert-info">
+            <Text text="1." styleClass="userViewText"/>
+            <Text text="Proces F. Kawka" styleClass="userViewText"/>
+            <Text text="28.12.2024" styleClass="userViewText"/>
+            <ProgressBar styleClass="progress-bar-primary" />
+            <Button styleClass="btn,btn-primary" text="Return"/>
+        </HBox>
+    </VBox>
+
+</VBox>
