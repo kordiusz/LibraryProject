@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.TextFlow?>
+<?import org.kordamp.bootstrapfx.scene.layout.Panel?>
+<?import javafx.scene.text.Text?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.carproject.UserBrowseView"
+      prefHeight="400.0" prefWidth="600.0">
+    <HBox spacing="10" styleClass="toolbar">
+        <!-- Logo -->
+        <ImageView fitWidth="32" fitHeight="32">
+            <Image url="@/logo.png"/>
+        </ImageView>
+
+        <!-- Title -->
+        <VBox alignment="CENTER_LEFT" styleClass="logo-text">
+            <Label text="Igor's Library" styleClass="h4 text-white" />
+        </VBox>
+
+        <!-- Spacer -->
+        <Region HBox.hgrow="ALWAYS" />
+
+        <!-- Example of right-aligned content (optional) -->
+        <TextArea prefHeight="5" prefWidth="100"/>
+        <Button text="Search"/>
+    </HBox>
+
+    <VBox>
+        <GridPane styleClass="bookRentalPanel, alert, alert-info">
+
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0"  text="1." styleClass="userViewText"/>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" text="Proces" styleClass="userViewText"/>
+            <Label GridPane.columnIndex="2" GridPane.rowIndex="0" text="F. Kawka" styleClass="userViewText"/>
+            <Label GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.columnSpan="2" text="28.08.2024" styleClass="userViewText, alert, alert-danger"/>
+            <Button GridPane.columnIndex="5" GridPane.rowIndex="0" styleClass="btn, btn-primary" text="Powiadom"/>
+        </GridPane>
+
+        <GridPane styleClass="bookRentalPanel, alert, alert-info" >
+
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0"  text="1." styleClass="userViewText"/>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" text="Proces" styleClass="userViewText"/>
+            <Label GridPane.columnIndex="2" GridPane.rowIndex="0" text="F. Kawka" styleClass="userViewText"/>
+            <Button GridPane.columnIndex="5" GridPane.rowIndex="0" styleClass="btn,btn-primary" text="Wypozycz"/>
+        </GridPane>
+    </VBox>
+
+</VBox>
