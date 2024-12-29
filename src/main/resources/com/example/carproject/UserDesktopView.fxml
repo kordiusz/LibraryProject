@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.carproject.UserDesktopController"
+      prefHeight="400.0" prefWidth="600.0"
+    >
+    <HBox spacing="10" styleClass="toolbar">
+        <!-- Logo -->
+        <ImageView fitWidth="32" fitHeight="32">
+            <Image url="@/logo.png"/>
+        </ImageView>
+
+        <!-- Title -->
+        <VBox alignment="CENTER_LEFT" styleClass="logo-text">
+            <Label text="Igor's Library" styleClass="h4 text-white" />
+        </VBox>
+
+        <!-- Spacer -->
+        <Region HBox.hgrow="ALWAYS" />
+
+        <!-- Example of right-aligned content (optional) -->
+        <VBox>
+            <Label text="Ilosc pkt"/>
+            <Label text="28" styleClass="text-success" />
+        </VBox>
+    </HBox>
+
+    <VBox alignment="CENTER">
+        <Region prefHeight="20"/>
+        <TextFlow textAlignment="CENTER">
+            <Text text="Czesc, " style="-fx-font-size: 20;" />
+            <Text text="Marek Mostowiak" style="-fx-font-size: 20;" styleClass="text-success" />
+        </TextFlow>
+
+        <GridPane hgap="10" vgap="10" prefWidth="300" prefHeight="100" alignment="CENTER">
+
+
+            <Button GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="btn, btn-primary" style="-fx-padding: 30" text="Przegladaj"/>
+            <Button GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="btn, btn-primary" style="-fx-padding: 30" text="Wypozyczone"/>
+        </GridPane>
+        <TextFlow textAlignment="CENTER">
+            <Text text="W sumie wypozyczyles "/>
+            <Text text="10" styleClass="text-primary"/>
+            <Text text=" ksiazek."/>
+        </TextFlow>
+    <TextFlow textAlignment="CENTER">
+        <Text text="Jestes uzytkownikiem od "/>
+        <Text text="31.06.2004" styleClass="text-primary"/>
+    </TextFlow>
+        <Region prefHeight="10"/>
+    <Button text="Regulamin" styleClass="btn, btn-default"/>
+    </VBox>
+
+</VBox>
