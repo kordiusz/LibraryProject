@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.carproject.UserBrowseView"
+      fx:controller="com.example.carproject.UserBrowseViewController"
       prefHeight="400.0" prefWidth="600.0">
     <HBox spacing="10" styleClass="toolbar">
         <!-- Logo -->
@@ -34,22 +34,23 @@
         <Button text="Search"/>
     </HBox>
 
-    <VBox>
-        <GridPane styleClass="bookRentalPanel, alert, alert-info">
+    <VBox fx:id="record_container">
+        <GridPane styleClass="bookRentalPanel, alert, alert-info" gridLinesVisible="false">
 
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints percentWidth="16"/>
+                <ColumnConstraints percentWidth="16"/>
+                <ColumnConstraints percentWidth="16"/>
+                <ColumnConstraints percentWidth="16"/>
+                <ColumnConstraints percentWidth="16"/>
+                <ColumnConstraints percentWidth="16"/>
+
             </columnConstraints>
-            <Label GridPane.columnIndex="0" GridPane.rowIndex="0"  text="1." styleClass="userViewText"/>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" text="Proces" styleClass="userViewText"/>
-            <Label GridPane.columnIndex="2" GridPane.rowIndex="0" text="F. Kawka" styleClass="userViewText"/>
-            <Label GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.columnSpan="2" text="28.08.2024" styleClass="userViewText, alert, alert-danger"/>
-            <Button GridPane.columnIndex="5" GridPane.rowIndex="0" styleClass="btn, btn-primary" text="Powiadom"/>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0"  text="1." styleClass="userViewText" GridPane.halignment="CENTER"/>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" text="Proces" styleClass="userViewText" GridPane.halignment="CENTER"/>
+            <Label GridPane.columnIndex="2" GridPane.rowIndex="0" text="F. Kawka" styleClass="userViewText" GridPane.halignment="CENTER"/>
+            <Label GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.columnSpan="2" text="28.08.2024" styleClass="userViewText, alert, alert-danger" GridPane.halignment="CENTER"/>
+            <Button GridPane.columnIndex="5" GridPane.rowIndex="0" styleClass="btn, btn-primary" text="Powiadom" GridPane.halignment="CENTER"/>
         </GridPane>
 
         <GridPane styleClass="bookRentalPanel, alert, alert-info" >

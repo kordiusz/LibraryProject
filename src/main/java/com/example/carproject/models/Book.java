@@ -8,6 +8,17 @@ public class Book {
     private String author;
     private int borrowCount;
     private LocalDate publishDate;
+    private int rental_id;
+
+
+    public Book(int id, String title, String author, int borrowCount, LocalDate publishDate, int rental_id){
+        this. id = id;
+        this.title =title;
+        this.author = author;
+        this.borrowCount = borrowCount;
+        this.publishDate = publishDate;
+        this.rental_id = rental_id;
+    }
 
     // Getters and Setters
     public int getId() {
@@ -16,6 +27,12 @@ public class Book {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public int getRental_id(){
+        return rental_id;
+    }
+    public void setRental_id(int rental_id){
+        this.rental_id = rental_id;
     }
 
     public String getTitle() {

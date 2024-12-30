@@ -1,6 +1,7 @@
 package com.example.carproject;
 
 import com.example.carproject.models.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
@@ -17,6 +18,10 @@ public class UserDesktopController
     public Text rented_total_label;
     public Text timestamp_label;
 
+    @FXML
+    public void initialize(){
+
+    }
 
     //Update using model.
     public void update(){
@@ -25,5 +30,9 @@ public class UserDesktopController
         rented_total_label.setText(String.valueOf(user.getRentedTotal()));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         timestamp_label.setText(user.getCreationTimestamp().format(formatter));
+    }
+
+    void switchToBrowse(ActionEvent event){
+
     }
 }
