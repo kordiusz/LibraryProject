@@ -30,12 +30,13 @@
         <Region HBox.hgrow="ALWAYS" />
 
         <!-- Example of right-aligned content (optional) -->
-        <TextArea prefHeight="5" prefWidth="100"/>
-        <Button text="Search"/>
+        <TextArea prefHeight="5" prefWidth="100" fx:id="search_field"/>
+        <Button text="Search" fx:id="search_button"/>
     </HBox>
 
     <Label text="Lista ksiazek w bibliotece: " styleClass="bold" alignment="BASELINE_LEFT" />
-    <CheckBox text="Tylko dostepne"/>
+
+    <CheckBox text="Tylko dostepne" fx:id="only_availab_checkbox"/>
 
 
     <VBox fx:id="record_container" spacing="2" style="-fx-padding: 2 0 0 0">

@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -22,10 +24,20 @@ public class UserBrowseViewController
     public ArrayList<Book> books;
     @FXML
     public VBox record_container;
+    public Button search_button;
+    public TextArea search_field;
+    public CheckBox only_availab_checkbox;
 
     //TODO: Idea - have a button that recommends you random non-occupied book. Also checkbox to see only non-occupied.
     @FXML
     public void initialize(){
+        search_button.setOnAction(event->{
+                books = fetchFiltered(search_field.getText());
+                updateView();
+        });
+        only_availab_checkbox.setOnAction(event->{
+            updateView();
+        });
         updateView();
     }
 
@@ -40,7 +52,12 @@ public class UserBrowseViewController
 
     public void updateView(){
 
+        record_container.getChildren().clear();
         for(Book b : books){
+            //skip not available if checked.
+            if(only_availab_checkbox.isSelected() && b.getRental_id() != 0){
+                continue;
+            }
             record_container.getChildren().add(generateRecord(b));
         }
 
@@ -83,7 +100,7 @@ public class UserBrowseViewController
 
         Label label4 = new Label();
         label4.getStyleClass().add("userViewText");
-
+        label4.setPadding(new Insets(2));
         if(b.getRental_id() == 0){
 
             label4.setText("Dostepne");
@@ -92,7 +109,7 @@ public class UserBrowseViewController
         }
         else{
             label4.setText("Niedostepne");
-            label4.getStyleClass().add("alert");
+            label4.getStyleClass().add("danger");
             label4.getStyleClass().add("alert-danger");
         }
 
@@ -118,14 +135,41 @@ public class UserBrowseViewController
     }
 
 
-    ArrayList<Book> fetchBooks()
-    {
-        return fetchBooks("SELECT * FROM BOOK LIMIT 15");
+
+
+    ArrayList<Book> fetchFiltered(String filter){
+        ArrayList<Book> result = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
+            String query = "SELECT * FROM book WHERE title LIKE ? OR author LIKE ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, "%" + filter + "%");
+            stmt.setString(2, "%" + filter + "%");
+
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                Date date = rs.getDate("publish_date");
+                int borrow_count = rs.getInt("borrow_count");
+                int rental_id = rs.getInt("rental_id");
+                result.add(new Book(id, title, author,  borrow_count, date.toLocalDate(),rental_id));
+            }
+
+
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return  result;
     }
 
 
-
-    ArrayList<Book> fetchBooks(String query){
+    ArrayList<Book> fetchBooks(){
+        String query = "SELECT * FROM BOOK LIMIT 15";
         ArrayList<Book> result = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
             PreparedStatement stmt = conn.prepareStatement(query) ;
