@@ -10,9 +10,12 @@ import java.io.IOException;
 import java.sql.*;
 
 public class StartApplication extends Application {
+
+    public static final String db_url = "jdbc:sqlite:my.db";
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("UserDesktopView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 500);
 
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
@@ -23,17 +26,18 @@ public class StartApplication extends Application {
         stage.show();
     }
 
-    private static void generateExampleDataIfNotExists(){
-        String url = "jdbc:sqlite:my.db";
+    private static void generateDbStructureIfNotExists(){
 
 
         // SQL statement for creating a new table
         String sqlUser =
                 "CREATE TABLE IF NOT EXISTS user (" +
                         "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "    nickname TEXT NOT NULL,"+
                         "    name TEXT NOT NULL," +
                         "    surname TEXT NOT NULL," +
                         "    creation_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+                        "    total_rented INTEGER DEFAULT 0,"+
                         "    points INTEGER DEFAULT 0" +
                         ");";
         String sqlBook =
@@ -55,7 +59,8 @@ public class StartApplication extends Application {
                         "    FOREIGN KEY (user_id) REFERENCES user(id)" +
                         ");";
 
-        try (Connection conn = DriverManager.getConnection(url);
+
+        try (Connection conn = DriverManager.getConnection(db_url);
              Statement stmt = conn.createStatement()) {
             stmt.execute(sqlUser);
             stmt.execute(sqlBook);
@@ -69,8 +74,8 @@ public class StartApplication extends Application {
     }
 
     public static void main(String[] args) {
-        generateExampleDataIfNotExists();
-        //launch();
+        generateDbStructureIfNotExists();
+        launch();
 
 
     }

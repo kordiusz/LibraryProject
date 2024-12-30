@@ -41,8 +41,8 @@
     <VBox spacing="10" alignment="CENTER">
 
     <Label text="Podaj nazwe uzytkownika" style="-fx-font-size: 13; -fx-padding: 10 0 0 0"/>
-    <TextArea  maxHeight="8" maxWidth="250"/>
-    <Button text="Zaloguj" styleClass="btn, btn-warning" style="-fx-padding: 10 0"/>
+    <TextArea  maxHeight="8" maxWidth="250" fx:id="username_field"/>
+    <Button text="Zaloguj" styleClass="btn, btn-warning" style="-fx-padding: 10 0" fx:id="submit_btn"/>
     </VBox>
 </VBox>
 

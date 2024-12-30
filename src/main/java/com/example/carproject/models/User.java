@@ -6,8 +6,18 @@ public class User {
     private int id;
     private String name;
     private String surname;
+    private String nickname;
     private LocalDateTime creationTimestamp;
     private int points;
+
+    public User(int id, String name, String surname, String nickname, LocalDateTime creationTimestamp, int points){
+        this.id = id;
+        this. name =name;
+        this. surname = surname;
+        this.nickname = nickname;
+        this.creationTimestamp = creationTimestamp;
+        this.points = points;
+    }
 
     // Getters and Setters
     public int getId() {
@@ -30,10 +40,15 @@ public class User {
         return surname;
     }
 
+    public String getNickname(){
+        return nickname;
+    }
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
+    public void setNickname(String nick){
+        this.nickname = nick;
+    }
     public LocalDateTime getCreationTimestamp() {
         return creationTimestamp;
     }
@@ -49,5 +64,8 @@ public class User {
     public void setPoints(int points) {
         this.points = points;
     }
+
+
+
 }
 
