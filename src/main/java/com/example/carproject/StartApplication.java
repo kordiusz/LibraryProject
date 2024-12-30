@@ -43,10 +43,12 @@ public class StartApplication extends Application {
         String sqlBook =
                         "CREATE TABLE IF NOT EXISTS book (" +
                         "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                "  rental_id INTEGER,"+
                         "    title TEXT NOT NULL," +
                         "    author TEXT NOT NULL," +
                         "    borrow_count INTEGER DEFAULT 0," +
-                        "    publish_date DATE NOT NULL" +
+                        "    publish_date DATE NOT NULL," +
+                                "FOREIGN KEY (rental_id) REFERENCES book_rental(id)"+
                         ");" ;
                 String sqlRental =
                         "CREATE TABLE IF NOT EXISTS book_rental (" +

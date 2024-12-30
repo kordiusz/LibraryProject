@@ -34,40 +34,14 @@
         <Button text="Search"/>
     </HBox>
 
-    <VBox fx:id="record_container">
-        <GridPane styleClass="bookRentalPanel, alert, alert-info" gridLinesVisible="false">
+    <Label text="Lista ksiazek w bibliotece: " styleClass="bold" alignment="BASELINE_LEFT" />
+    <CheckBox text="Tylko dostepne"/>
 
-            <columnConstraints>
-                <ColumnConstraints percentWidth="16"/>
-                <ColumnConstraints percentWidth="16"/>
-                <ColumnConstraints percentWidth="16"/>
-                <ColumnConstraints percentWidth="16"/>
-                <ColumnConstraints percentWidth="16"/>
-                <ColumnConstraints percentWidth="16"/>
 
-            </columnConstraints>
-            <Label GridPane.columnIndex="0" GridPane.rowIndex="0"  text="1." styleClass="userViewText" GridPane.halignment="CENTER"/>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" text="Proces" styleClass="userViewText" GridPane.halignment="CENTER"/>
-            <Label GridPane.columnIndex="2" GridPane.rowIndex="0" text="F. Kawka" styleClass="userViewText" GridPane.halignment="CENTER"/>
-            <Label GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.columnSpan="2" text="28.08.2024" styleClass="userViewText, alert, alert-danger" GridPane.halignment="CENTER"/>
-            <Button GridPane.columnIndex="5" GridPane.rowIndex="0" styleClass="btn, btn-primary" text="Powiadom" GridPane.halignment="CENTER"/>
-        </GridPane>
+    <VBox fx:id="record_container" spacing="2" style="-fx-padding: 2 0 0 0">
 
-        <GridPane styleClass="bookRentalPanel, alert, alert-info" >
+    <!-- Content is generated here via code -->
 
-            <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="ALWAYS"/>
-            </columnConstraints>
-            <Label GridPane.columnIndex="0" GridPane.rowIndex="0"  text="1." styleClass="userViewText"/>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" text="Proces" styleClass="userViewText"/>
-            <Label GridPane.columnIndex="2" GridPane.rowIndex="0" text="F. Kawka" styleClass="userViewText"/>
-            <Button GridPane.columnIndex="5" GridPane.rowIndex="0" styleClass="btn,btn-primary" text="Wypozycz"/>
-        </GridPane>
     </VBox>
 
 </VBox>

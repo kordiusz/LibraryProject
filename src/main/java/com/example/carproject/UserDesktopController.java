@@ -3,9 +3,16 @@ package com.example.carproject;
 import com.example.carproject.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 public class UserDesktopController
@@ -32,7 +39,24 @@ public class UserDesktopController
         timestamp_label.setText(user.getCreationTimestamp().format(formatter));
     }
 
-    void switchToBrowse(ActionEvent event){
+    void switchToBrowse(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserBrowseView.fxml"));
+        Parent root = loader.load();
+
+        //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+
+        stage.setScene(scene);
+        stage.show();
+
+        //TODO: no idea how to pass the data so its already in controller when initialize is executed.
+        // But it would be nice to have it.
+        UserBrowseViewController browseController = loader.getController();
+        browseController.fetchBooks();
 
     }
 }
