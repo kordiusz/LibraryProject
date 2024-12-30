@@ -8,15 +8,17 @@ public class User {
     private String surname;
     private String nickname;
     private LocalDateTime creationTimestamp;
+    private int rented_total;
     private int points;
 
-    public User(int id, String name, String surname, String nickname, LocalDateTime creationTimestamp, int points){
+    public User(int id, String name, String surname, String nickname, LocalDateTime creationTimestamp, int points, int rented_total){
         this.id = id;
         this. name =name;
         this. surname = surname;
         this.nickname = nickname;
         this.creationTimestamp = creationTimestamp;
         this.points = points;
+        this.rented_total =rented_total;
     }
 
     // Getters and Setters
@@ -38,6 +40,14 @@ public class User {
 
     public String getSurname() {
         return surname;
+    }
+
+    public int getRentedTotal(){
+        return rented_total;
+    }
+
+    public void setRented_total(int total){
+        this.rented_total =total;
     }
 
     public String getNickname(){

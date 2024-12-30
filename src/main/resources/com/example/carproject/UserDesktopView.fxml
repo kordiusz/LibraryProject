@@ -32,7 +32,7 @@
         <!-- Example of right-aligned content (optional) -->
         <VBox>
             <Label text="Ilosc pkt"/>
-            <Label text="28" styleClass="text-success" />
+            <Label text="0" styleClass="text-success" fx:id="points_label"/>
         </VBox>
     </HBox>
 
@@ -40,7 +40,7 @@
         <Region prefHeight="20"/>
         <TextFlow textAlignment="CENTER">
             <Text text="Czesc, " style="-fx-font-size: 20;" />
-            <Text text="Marek Mostowiak" style="-fx-font-size: 20;" styleClass="text-success" />
+            <Text text="..." fx:id="full_name_label" style="-fx-font-size: 20;" styleClass="text-success" />
         </TextFlow>
 
         <GridPane hgap="10" vgap="10" prefWidth="300" prefHeight="100" alignment="CENTER">
@@ -51,12 +51,12 @@
         </GridPane>
         <TextFlow textAlignment="CENTER">
             <Text text="W sumie wypozyczyles "/>
-            <Text text="10" styleClass="text-primary"/>
+            <Text text="0" styleClass="text-primary" fx:id="rented_total_label"/>
             <Text text=" ksiazek."/>
         </TextFlow>
     <TextFlow textAlignment="CENTER">
         <Text text="Jestes uzytkownikiem od "/>
-        <Text text="31.06.2004" styleClass="text-primary"/>
+        <Text text="..." styleClass="text-primary" fx:id="timestamp_label"/>
     </TextFlow>
         <Region prefHeight="10"/>
     <Button text="Regulamin" styleClass="btn, btn-default"/>

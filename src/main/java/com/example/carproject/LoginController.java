@@ -61,7 +61,8 @@ public class LoginController
                 String nickname = rs.getString("nickname");
                 Timestamp stamp = rs.getTimestamp("creation_timestamp");
                 int points = rs.getInt("points");
-                return new User(id, name, surname, nickname, stamp.toLocalDateTime(), points);
+                int rented_total = rs.getInt("total_rented");
+                return new User(id, name, surname, nickname, stamp.toLocalDateTime(), points, rented_total);
             }
 
 
@@ -76,10 +77,6 @@ public class LoginController
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDesktopView.fxml"));
         Parent root = loader.load();
 
-
-        UserDesktopController desktopController = loader.getController();
-        desktopController.user = u;
-
         //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -89,6 +86,12 @@ public class LoginController
 
         stage.setScene(scene);
         stage.show();
+
+        //TODO: no idea how to pass the data so its already in controller when initialize is executed.
+        // But it would be nice to have it.
+        UserDesktopController desktopController = loader.getController();
+        desktopController.user = u;
+        desktopController.update();
     }
 
 }
