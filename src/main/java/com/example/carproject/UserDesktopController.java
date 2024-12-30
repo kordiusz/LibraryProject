@@ -1,4 +1,9 @@
 package com.example.carproject;
 
-public class UserDesktopController {
+import com.example.carproject.models.User;
+
+public class UserDesktopController
+{
+
+    public User user;
 }
