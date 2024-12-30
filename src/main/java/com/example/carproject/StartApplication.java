@@ -23,25 +23,55 @@ public class StartApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
-
+    private static void generateExampleDataIfNotExists(){
         String url = "jdbc:sqlite:my.db";
 
 
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS warehouses ("
-                + "	id INTEGER PRIMARY KEY,"
-                + "	name text NOT NULL,"
-                + "	capacity REAL"
-                + ");";
+        String sqlUser =
+                "CREATE TABLE IF NOT EXISTS user (" +
+                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "    name TEXT NOT NULL," +
+                        "    surname TEXT NOT NULL," +
+                        "    creation_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+                        "    points INTEGER DEFAULT 0" +
+                        ");";
+        String sqlBook =
+                        "CREATE TABLE IF NOT EXISTS book (" +
+                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "    title TEXT NOT NULL," +
+                        "    author TEXT NOT NULL," +
+                        "    borrow_count INTEGER DEFAULT 0," +
+                        "    publish_date DATE NOT NULL" +
+                        ");" ;
+                String sqlRental =
+                        "CREATE TABLE IF NOT EXISTS book_rental (" +
+                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "    book_id INTEGER NOT NULL," +
+                        "    user_id INTEGER NOT NULL," +
+                        "    rent_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+                        "    deadline TIMESTAMP NOT NULL," +
+                        "    FOREIGN KEY (book_id) REFERENCES book(id)," +
+                        "    FOREIGN KEY (user_id) REFERENCES user(id)" +
+                        ");";
 
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) {
-            // create a new table
-            stmt.execute(sql);
+            stmt.execute(sqlUser);
+            stmt.execute(sqlBook);
+            stmt.execute(sqlRental);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+
+
+    }
+
+    public static void main(String[] args) {
+        generateExampleDataIfNotExists();
+        //launch();
+
+
     }
 }
