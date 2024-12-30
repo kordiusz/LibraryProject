@@ -15,8 +15,8 @@ public class StartApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("UserBrowseView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 500);
+        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("LoginView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
 
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());

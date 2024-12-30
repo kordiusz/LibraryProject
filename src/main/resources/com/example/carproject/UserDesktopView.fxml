@@ -46,7 +46,7 @@
         <GridPane hgap="10" vgap="10" prefWidth="300" prefHeight="100" alignment="CENTER">
 
 
-            <Button GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="btn, btn-primary" style="-fx-padding: 30" text="Przegladaj"/>
+            <Button GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="btn, btn-primary" style="-fx-padding: 30" text="Przegladaj" fx:id="browse_btn"/>
             <Button GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="btn, btn-primary" style="-fx-padding: 30" text="Wypozyczone"/>
         </GridPane>
         <TextFlow textAlignment="CENTER">

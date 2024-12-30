@@ -24,10 +24,14 @@ public class UserBrowseViewController
     public ArrayList<Book> books;
     @FXML
     public VBox record_container;
+    @FXML
     public Button search_button;
+    @FXML
     public TextArea search_field;
+    @FXML
     public CheckBox only_availab_checkbox;
-
+    //TODO: finish search buttons and improve the header label with the checkbox.
+    //TODO: import icons for wypozycz and powiadom.
     //TODO: Idea - have a button that recommends you random non-occupied book. Also checkbox to see only non-occupied.
     @FXML
     public void initialize(){
@@ -73,10 +77,17 @@ public class UserBrowseViewController
 
         gridPane.getStyleClass().addAll("bookRentalPanel", "alert");
 
+
+        int[] percent = new int[5];
+        percent[0] = 5;
+        percent[1]=30;
+        percent[2] = 30;
+        percent[3] = 15;
+        percent[4] = 20;
         // Definiowanie kolumn z szerokościami procentowymi
         for (int i = 0; i < 5; i++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(20);
+            columnConstraints.setPercentWidth(percent[i]);
             gridPane.getColumnConstraints().add(columnConstraints);
         }
 

@@ -14,7 +14,7 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.carproject.UserBrowseViewController"
-      prefHeight="400.0" prefWidth="600.0">
+      prefHeight="400.0" prefWidth="700.0">
     <HBox spacing="10" styleClass="toolbar">
         <!-- Logo -->
         <ImageView fitWidth="32" fitHeight="32">

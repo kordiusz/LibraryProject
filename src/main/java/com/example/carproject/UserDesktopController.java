@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,10 +25,18 @@ public class UserDesktopController
     public Text full_name_label;
     public Text rented_total_label;
     public Text timestamp_label;
+    public Button browse_btn;
 
     @FXML
     public void initialize(){
 
+        browse_btn.setOnAction(event->{
+            try {
+                switchToBrowse(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     //Update using model.
