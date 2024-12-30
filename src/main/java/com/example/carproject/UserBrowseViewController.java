@@ -131,12 +131,14 @@ public class UserBrowseViewController
         Button button = new Button();
         if(b.getRental_id() == 0){
             button.setText("Wypozycz");
+
         }
         else{
             button.setText("Powiadom");
         }
-        button.getStyleClass().add("btn");
         button.getStyleClass().add("btn-primary");
+        button.getStyleClass().add("btn");
+
         GridPane.setConstraints(button, 4, 0); // Kolumna 5, Wiersz 0
         GridPane.setHalignment(button, HPos.CENTER);
 

@@ -16,22 +16,21 @@
       fx:controller="com.example.carproject.UserBrowseViewController"
       prefHeight="400.0" prefWidth="700.0">
     <HBox spacing="10" styleClass="toolbar">
-        <!-- Logo -->
-        <ImageView fitWidth="32" fitHeight="32">
-            <Image url="@/logo.png"/>
+        <ImageView  fitWidth="32" fitHeight="32">
+            <Image url="@/Fox.svg.png"/>
         </ImageView>
 
         <!-- Title -->
         <VBox alignment="CENTER_LEFT" styleClass="logo-text">
-            <Label text="Igor's Library" styleClass="h4 text-white" />
+            <Label text="LightLib" styleClass="h4 text-white" />
         </VBox>
 
         <!-- Spacer -->
         <Region HBox.hgrow="ALWAYS" />
 
         <!-- Example of right-aligned content (optional) -->
-        <TextArea prefHeight="5" prefWidth="100" fx:id="search_field"/>
-        <Button text="Search" fx:id="search_button"/>
+        <TextArea prefHeight="5" prefWidth="100" fx:id="search_field" />
+        <Button text="Search" fx:id="search_button" styleClass="btn, btn-warning" />
     </HBox>
 
     <Label text="Lista ksiazek w bibliotece: " styleClass="bold" alignment="BASELINE_LEFT" />
