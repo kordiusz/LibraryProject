@@ -1,7 +1,6 @@
 package com.example.carproject;
 
 import com.example.carproject.DataAccess.BookDb;
-import com.example.carproject.models.Book;
 import com.example.carproject.models.BookRental;
 import com.example.carproject.models.User;
 import javafx.fxml.FXML;
@@ -170,6 +169,7 @@ public class UserViewController {
         // But it would be nice to have it.
         UserDesktopController desktopController = loader.getController();
         desktopController.user = u;
-        desktopController.update();
+        desktopController.updateData();
+        desktopController.updateView();
     }
 }

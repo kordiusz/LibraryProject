@@ -229,6 +229,7 @@ public class BookDb
             query = "UPDATE user SET points = points + ?, total_rented = total_rented + 1 WHERE id=?;";
             PreparedStatement updatePoints = conn.prepareStatement(query);
             updatePoints.setInt(1,LibraryRules.pointsForReturn(returnInTime(br.getDeadline())));
+            updatePoints.setInt(2, br.getUserId());
 
             updatePoints.executeUpdate();
 

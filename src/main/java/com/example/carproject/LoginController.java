@@ -3,7 +3,6 @@ package com.example.carproject;
 import com.example.carproject.DataAccess.BookDb;
 import com.example.carproject.models.User;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,7 +14,6 @@ import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
-import java.sql.*;
 
 public class LoginController
 {
@@ -64,7 +62,7 @@ public class LoginController
         // But it would be nice to have it.
         UserDesktopController desktopController = loader.getController();
         desktopController.user = u;
-        desktopController.update();
+        desktopController.updateView();
     }
 
 }

@@ -23,7 +23,9 @@ public class LoggedUser
             rentals = BookDb.fetchRentalsFor(current);
     }
 
-
+    public static void updateUserData(){
+        current = BookDb.tryFetchUser(current.getNickname());
+    }
 
     public static boolean isRentedByMe(Book b){
         return LoggedUser.rentals.stream().anyMatch(rental -> b.getId() == rental.getBookId());

@@ -206,7 +206,8 @@ public class UserBrowseViewController
         // But it would be nice to have it.
         UserDesktopController desktopController = loader.getController();
         desktopController.user = u;
-        desktopController.update();
+        desktopController.updateData();
+        desktopController.updateView();
     }
 
 

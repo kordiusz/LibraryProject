@@ -50,8 +50,14 @@ public class UserDesktopController
         });
     }
 
+    public void updateData(){
+        LoggedUser.updateUserData();
+        //TODO: Make all calls to user that are not static - static.
+        user = LoggedUser.current;
+    }
+
     //Update using model.
-    public void update(){
+    public void updateView(){
         points_label.setText(String.valueOf(user.getPoints()));
         full_name_label.setText(String.format("%s %s", user.getName(), user.getSurname()));
         rented_total_label.setText(String.valueOf(user.getRentedTotal()));
