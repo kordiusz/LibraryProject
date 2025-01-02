@@ -5,17 +5,25 @@ import com.example.carproject.models.Book;
 import com.example.carproject.models.BookRental;
 import com.example.carproject.models.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
-import java.sql.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -35,6 +43,7 @@ public class UserBrowseViewController
     public CheckBox only_availab_checkbox;
 
     public User user;
+    public ImageView logo_btn;
 
     //TODO: finish search buttons and improve the header label with the checkbox.
     //TODO: import icons for wypozycz and powiadom.
@@ -48,6 +57,13 @@ public class UserBrowseViewController
         });
         only_availab_checkbox.setOnAction(event->{
             updateView();
+        });
+        logo_btn.setOnMouseClicked(event->{
+            try {
+                switchToDesktop(LoggedUser.current, event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -172,8 +188,26 @@ public class UserBrowseViewController
         return gridPane;
     }
 
+    void switchToDesktop(User u, MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDesktopView.fxml"));
+        Parent root = loader.load();
 
+        //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
 
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+
+        stage.setScene(scene);
+        stage.show();
+
+        //TODO: no idea how to pass the data so its already in controller when initialize is executed.
+        // But it would be nice to have it.
+        UserDesktopController desktopController = loader.getController();
+        desktopController.user = u;
+        desktopController.update();
+    }
 
 
 

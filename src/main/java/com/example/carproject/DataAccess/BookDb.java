@@ -7,6 +7,7 @@ import com.example.carproject.models.BookRental;
 import com.example.carproject.models.User;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class BookDb
@@ -206,23 +207,30 @@ public class BookDb
         return  result;
     }
 
-    public static void returnBook(User u, Book b){
+    public static boolean returnInTime(LocalDateTime deadline){return LocalDateTime.now().isBefore(deadline);}
+
+    public static void returnBook(BookRental br){
 
         try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
 
             //TODO: probably could delete rental_id from books since can just join two tables.
             String query = "DELETE FROM book_rental WHERE user_id = ?; ";
-            PreparedStatement delete = conn.prepareStatement(query);
-            delete.setInt(1, u.getId());
+            PreparedStatement deleteRental = conn.prepareStatement(query);
+            deleteRental.setInt(1, br.getUserId());
 
-            delete.executeUpdate();
+            deleteRental.executeUpdate();
 
-            query = "UPDATE book SET rental_id = 0 WHERE id=?;";
-            PreparedStatement update = conn.prepareStatement(query);
-            update.setInt(1,b.getId());
+            query = "UPDATE book SET rental_id = 0,borrow_count = borrow_count + 1  WHERE id=?;";
+            PreparedStatement updateBook = conn.prepareStatement(query);
+            updateBook.setInt(1,br.associatedBook.getId());
 
-            update.executeUpdate();
+            updateBook.executeUpdate();
 
+            query = "UPDATE user SET points = points + ?, total_rented = total_rented + 1 WHERE id=?;";
+            PreparedStatement updatePoints = conn.prepareStatement(query);
+            updatePoints.setInt(1,LibraryRules.pointsForReturn(returnInTime(br.getDeadline())));
+
+            updatePoints.executeUpdate();
 
         }
         catch (SQLException e) {

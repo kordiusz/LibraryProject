@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
@@ -27,6 +28,7 @@ public class UserDesktopController
     public Text timestamp_label;
     public Button browse_btn;
     public Button borrow_btn;
+    public ImageView logo_btn;
 
     @FXML
     public void initialize(){

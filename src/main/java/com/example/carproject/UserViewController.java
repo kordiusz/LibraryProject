@@ -3,16 +3,26 @@ package com.example.carproject;
 import com.example.carproject.DataAccess.BookDb;
 import com.example.carproject.models.Book;
 import com.example.carproject.models.BookRental;
+import com.example.carproject.models.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,12 +32,20 @@ public class UserViewController {
 
 
     public VBox record_container;
+    public ImageView logo_btn;
 
     ArrayList<BookRental> rented_books;
 
     @FXML
     public void initialize(){
         rented_books = BookDb.fetchRichRentalsFor(LoggedUser.current);
+        logo_btn.setOnMouseClicked(event->{
+            try {
+                switchToDesktop(LoggedUser.current,event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void updateView(){
@@ -92,7 +110,7 @@ public class UserViewController {
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         label4.setText(br.getDeadline().format(formatters));
 
-        if(LocalDateTime.now().isBefore(br.getDeadline())){
+        if(BookDb.returnInTime(br.getDeadline())){
 
             label4.getStyleClass().add("success");
             label4.getStyleClass().add("alert-success");
@@ -112,7 +130,7 @@ public class UserViewController {
         button.getStyleClass().add("btn");
 
         button.setOnAction(event->{
-            BookDb.returnBook(LoggedUser.current, br.associatedBook);
+            BookDb.returnBook(br);
             updateData();
             updateView();
         });
@@ -121,7 +139,7 @@ public class UserViewController {
         GridPane.setHalignment(button, HPos.CENTER);
 
         double total = (double) Duration.between(br.getRentTimestamp(), br.getDeadline()).toMinutes();
-        double elapsed = (double) Duration.between(LocalDateTime.now().plusWeeks(2), br.getDeadline()).toMinutes();
+        double elapsed = (double) Duration.between(LocalDateTime.now(), br.getDeadline()).toMinutes();
         double ratio =  (total-elapsed)/ total;
         ProgressBar bar = new ProgressBar(ratio);
         GridPane.setConstraints(bar, 5,0);
@@ -132,5 +150,26 @@ public class UserViewController {
 
         gridPane.getChildren().addAll(label1, label2, label3, label4, button, bar);
         return gridPane;
+    }
+
+    void switchToDesktop(User u, MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDesktopView.fxml"));
+        Parent root = loader.load();
+
+        //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+
+        stage.setScene(scene);
+        stage.show();
+
+        //TODO: no idea how to pass the data so its already in controller when initialize is executed.
+        // But it would be nice to have it.
+        UserDesktopController desktopController = loader.getController();
+        desktopController.user = u;
+        desktopController.update();
     }
 }
