@@ -34,6 +34,15 @@
         <Button text="Search"/>
     </HBox>
 
+    <Label text="Lista wypozyczonych ksiazek " styleClass="h3" style="-fx-padding: 10 0 10 0"  alignment="BASELINE_LEFT" />
+
+
+    <VBox fx:id="record_container" spacing="2" style="-fx-padding: 2 0 0 0">
+
+        <!-- Content is generated here via code -->
+
+    </VBox>
+
     <VBox>
         <HBox styleClass="bookRentalPanel, alert, alert-info">
 

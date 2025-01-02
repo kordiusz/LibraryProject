@@ -1,5 +1,6 @@
 package com.example.carproject;
 
+import com.example.carproject.DataAccess.BookDb;
 import com.example.carproject.models.Book;
 import com.example.carproject.models.BookRental;
 import com.example.carproject.models.User;
@@ -16,6 +17,7 @@ import javafx.scene.layout.VBox;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 
 public class UserBrowseViewController
 {
@@ -41,7 +43,7 @@ public class UserBrowseViewController
     @FXML
     public void initialize(){
         search_button.setOnAction(event->{
-                books = fetchFiltered(search_field.getText());
+                books = BookDb.fetchFiltered(search_field.getText());
                 updateView();
         });
         only_availab_checkbox.setOnAction(event->{
@@ -52,37 +54,11 @@ public class UserBrowseViewController
 
 
     public void updateData(){
-        books = fetchBooks();
-        rentals = fetchMyRentals();
+        books = BookDb.fetchBooks();
+        rentals = BookDb.fetchRentalsFor(user);
     }
 
-    private ArrayList<BookRental> fetchMyRentals()
-    {
-        String query = "SELECT * FROM book_rental WHERE user_id=? LIMIT 15";
-        ArrayList<BookRental> result = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
-            PreparedStatement stmt = conn.prepareStatement(query) ;
-            stmt.setInt(1, user.getId());
-            ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-
-                int id = rs.getInt("id");
-                int book_id = rs.getInt("book_id");
-                int user_id = rs.getInt("user_id");
-                Timestamp rent_stamp = rs.getTimestamp("rent_timestamp");
-                Timestamp deadline_stamp = rs.getTimestamp("deadline");
-
-                result.add(new BookRental(id,book_id,user_id,rent_stamp.toLocalDateTime(),deadline_stamp.toLocalDateTime()));
-            }
-
-
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return  result;
-    }
 
     public void updateView(){
 
@@ -97,46 +73,12 @@ public class UserBrowseViewController
 
     }
 
-    ArrayList<Book> borrowBook(Book b){
-        ArrayList<Book> result = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
 
-            //TODO: make time of rental based on points.
-            String query = "INSERT INTO book_rental (book_id, user_id, deadline) VALUES (?,?,strftime('%Y-%m-%d %H:%M:%S', 'now', '+1 month'))";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, b.getId());
-            stmt.setInt(2, user.getId());
-
-
-            int successfull_insert = stmt.executeUpdate();
-
-            if (successfull_insert > 0){
-                try(ResultSet rs = stmt.getGeneratedKeys()){
-                    if(rs.next()){
-                        int newId = rs.getInt(1);
-
-                        query = "UPDATE book SET rental_id = ? WHERE id = ?";
-                        try(PreparedStatement book_update_stmt = conn.prepareStatement(query) ) {
-
-                            book_update_stmt.setInt(1, newId);
-                            book_update_stmt.setInt(2, b.getId());
-                            book_update_stmt.executeUpdate();
-                        }
-                    }
-                }
-            }
-
-
-            System.out.println("Zapytanie insert: "+successfull_insert);
-
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return  result;
-    }
 
     GridPane generateRecord(Book b){
+
+        boolean isRentedByMe = false;
+        if (b.getRental_id() != 0) isRentedByMe = rentals.stream().anyMatch(rental -> b.getId() == rental.getBookId());
 
         GridPane gridPane = new GridPane();
 
@@ -187,6 +129,11 @@ public class UserBrowseViewController
             label4.getStyleClass().add("success");
             label4.getStyleClass().add("alert-success");
         }
+        else if (isRentedByMe){
+            label4.setText("Twoj zbior");
+            label4.getStyleClass().add("warning");
+            label4.getStyleClass().add("alert-warning");
+        }
         else{
             label4.setText("Niedostepne");
             label4.getStyleClass().add("danger");
@@ -202,15 +149,15 @@ public class UserBrowseViewController
             button.setText("Wypozycz");
             button.setOnAction(event->
             {
-                borrowBook(b);
+                BookDb.borrowBook(b,user);
                 updateData();
                 updateView();
             });
             button.getStyleClass().add("btn-primary");
         }
-        else if (rentals.stream().anyMatch(rental -> b.getId() == rental.getId())){
-            button.setText("Twoja :)");
-            button.getStyleClass().add("btn-warning");
+        else if (isRentedByMe){
+            button.setText("Zwroc");
+            button.getStyleClass().add("btn-primary");
         }
         else{
             button.setText("Powiadom");
@@ -230,63 +177,9 @@ public class UserBrowseViewController
 
 
 
-    ArrayList<Book> fetchFiltered(String filter){
-        ArrayList<Book> result = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
-            String query = "SELECT * FROM book WHERE title LIKE ? OR author LIKE ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, "%" + filter + "%");
-            stmt.setString(2, "%" + filter + "%");
 
 
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                int id = rs.getInt("id");
-                String title = rs.getString("title");
-                String author = rs.getString("author");
-                Date date = rs.getDate("publish_date");
-                int borrow_count = rs.getInt("borrow_count");
-                int rental_id = rs.getInt("rental_id");
-                result.add(new Book(id, title, author,  borrow_count, date.toLocalDate(),rental_id));
-            }
 
 
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return  result;
-    }
-
-
-    ArrayList<Book> fetchBooks(){
-        String query = "SELECT * FROM BOOK LIMIT 15";
-        ArrayList<Book> result = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
-            PreparedStatement stmt = conn.prepareStatement(query) ;
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                int id = rs.getInt("id");
-                String title = rs.getString("title");
-                String author = rs.getString("author");
-                Date date = rs.getDate("publish_date");
-                int borrow_count = rs.getInt("borrow_count");
-                int rental_id = rs.getInt("rental_id");
-                result.add(new Book(id, title, author,  borrow_count, date.toLocalDate(),rental_id));
-            }
-
-
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return  result;
-
-    }
 
 }

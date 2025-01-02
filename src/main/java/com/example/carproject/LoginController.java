@@ -1,5 +1,6 @@
 package com.example.carproject;
 
+import com.example.carproject.DataAccess.BookDb;
 import com.example.carproject.models.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,7 +31,7 @@ public class LoginController
 
         submit_btn.setOnAction(event -> {
             if ( !username_field.getText().isBlank()) {
-                User user = tryFetchUser(username_field.getText());
+                User user = BookDb.tryFetchUser(username_field.getText());
                 if (user != null){
 
                     try {
@@ -43,36 +44,7 @@ public class LoginController
         });
     }
 
-    User tryFetchUser(String nick){
 
-        String query = "SELECT * FROM USER WHERE NICKNAME = ?";
-
-        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
-            PreparedStatement stmt = conn.prepareStatement(query) ;
-            stmt.setString(1, nick);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String surname = rs.getString("surname");
-                String nickname = rs.getString("nickname");
-                Timestamp stamp = rs.getTimestamp("creation_timestamp");
-                int points = rs.getInt("points");
-                int rented_total = rs.getInt("total_rented");
-                LoggedUser.current = new User(id, name, surname, nickname, stamp.toLocalDateTime(), points, rented_total);
-                return LoggedUser.current;
-            }
-
-
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return  null;
-    }
 
     void switchToDesktop(User u, ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDesktopView.fxml"));
