@@ -205,4 +205,28 @@ public class BookDb
         }
         return  result;
     }
+
+    public static void returnBook(User u, Book b){
+
+        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
+
+            //TODO: probably could delete rental_id from books since can just join two tables.
+            String query = "DELETE FROM book_rental WHERE user_id = ?; ";
+            PreparedStatement delete = conn.prepareStatement(query);
+            delete.setInt(1, u.getId());
+
+            delete.executeUpdate();
+
+            query = "UPDATE book SET rental_id = 0 WHERE id=?;";
+            PreparedStatement update = conn.prepareStatement(query);
+            update.setInt(1,b.getId());
+
+            update.executeUpdate();
+
+
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

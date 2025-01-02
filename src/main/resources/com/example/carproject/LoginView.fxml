@@ -16,29 +16,12 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ProgressBar?>
+
+<?import com.example.carproject.MyToolbar?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.carproject.LoginController"
       prefHeight="400.0" prefWidth="600.0">
-
-
-    <HBox spacing="10" styleClass="toolbar">
-        <!-- Logo -->
-        <ImageView  fitWidth="32" fitHeight="32">
-            <Image url="@/Fox.svg.png"/>
-        </ImageView>
-
-        <!-- Title -->
-        <VBox alignment="CENTER_LEFT" styleClass="logo-text">
-            <Label text="LightLib" styleClass="h4 text-white" />
-        </VBox>
-
-        <!-- Spacer -->
-        <Region HBox.hgrow="ALWAYS" />
-
-        <!-- Example of right-aligned content (optional) -->
-        <Label text="Welcome!" styleClass="text-white" />
-    </HBox>
-
+    <MyToolbar/>
 
     <VBox spacing="10" alignment="CENTER">
 

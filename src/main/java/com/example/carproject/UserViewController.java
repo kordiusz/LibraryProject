@@ -31,10 +31,13 @@ public class UserViewController {
     }
 
     public void updateView(){
-
+        record_container.getChildren().clear();
         for(BookRental br : rented_books){
             record_container.getChildren().add(generateRecord(br));
         }
+    }
+    public void updateData(){
+        rented_books = BookDb.fetchRichRentalsFor(LoggedUser.current);
     }
 
 
@@ -108,11 +111,17 @@ public class UserViewController {
         button.getStyleClass().add("btn-primary");
         button.getStyleClass().add("btn");
 
+        button.setOnAction(event->{
+            BookDb.returnBook(LoggedUser.current, br.associatedBook);
+            updateData();
+            updateView();
+        });
+
         GridPane.setConstraints(button, 4, 0);
         GridPane.setHalignment(button, HPos.CENTER);
 
         double total = (double) Duration.between(br.getRentTimestamp(), br.getDeadline()).toMinutes();
-        double elapsed = (double) Duration.between(LocalDateTime.now(), br.getDeadline()).toMinutes();
+        double elapsed = (double) Duration.between(LocalDateTime.now().plusWeeks(2), br.getDeadline()).toMinutes();
         double ratio =  (total-elapsed)/ total;
         ProgressBar bar = new ProgressBar(ratio);
         GridPane.setConstraints(bar, 5,0);
