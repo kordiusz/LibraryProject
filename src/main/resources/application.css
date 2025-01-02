@@ -24,3 +24,11 @@
 .userViewText{
     /*-fx-padding: 0 20 0 20;*/
 }
+
+.progress-bar {
+    -fx-background-radius: 2; /* Rounded corners */
+    -fx-padding: 2; /* Padding inside the element */
+    -fx-border-radius: 2; /* Border radius for rounded borders */
+    -fx-border-width: 2; /* Border width */
+    -fx-border-color: black; /* Border color */
+}

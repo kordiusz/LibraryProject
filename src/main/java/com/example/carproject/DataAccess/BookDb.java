@@ -127,7 +127,7 @@ public class BookDb
                 Timestamp deadline_stamp = rs.getTimestamp("deadline");
 
                 BookRental rental = new BookRental(id,book_id,user_id,rent_stamp.toLocalDateTime(),deadline_stamp.toLocalDateTime());
-                rental.associatedBook = new Book(-1, title, author,  borrow_count, date.toLocalDate(),-1);
+                rental.associatedBook = new Book(book_id, title, author,  borrow_count, date.toLocalDate(),id);
                 result.add(rental);
             }
 

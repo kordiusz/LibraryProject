@@ -95,6 +95,7 @@ public class UserDesktopController
 
         //TODO: no idea how to pass the data so its already in controller when initialize is executed.
         // But it would be nice to have it.
-        UserViewController browseController = loader.getController();
+        UserViewController borrowedController = loader.getController();
+        borrowedController.updateView();
     }
 }

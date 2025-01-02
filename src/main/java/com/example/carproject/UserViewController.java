@@ -8,10 +8,12 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,10 +32,13 @@ public class UserViewController {
 
     public void updateView(){
 
+        for(BookRental br : rented_books){
+            record_container.getChildren().add(generateRecord(br));
+        }
     }
 
 
-    GridPane generateRecord(BookRental rental, Book b){
+    GridPane generateRecord(BookRental br){
 
         GridPane gridPane = new GridPane();
 
@@ -44,31 +49,33 @@ public class UserViewController {
         gridPane.getStyleClass().addAll("bookRentalPanel", "alert");
 
 
-        int[] percent = new int[5];
+        int[] percent = new int[6];
         percent[0] = 5;
-        percent[1]=30;
-        percent[2] = 30;
-        percent[3] = 15;
-        percent[4] = 20;
+        percent[1]=20;
+        percent[2] = 20;
+        percent[3] = 20;
+        percent[4] = 15;
+        percent[5] = 20;
 
-        for (int i = 0; i < 5; i++) {
+
+        for (int i = 0; i < 6; i++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setPercentWidth(percent[i]);
             gridPane.getColumnConstraints().add(columnConstraints);
         }
 
         // Tworzenie Label i ustawianie właściwości
-        Label label1 = new Label(String.valueOf(b.getId()));
+        Label label1 = new Label(String.valueOf(br.associatedBook.getId()));
         label1.getStyleClass().add("userViewText");
         GridPane.setConstraints(label1, 0, 0); // Kolumna 0, Wiersz 0
         GridPane.setHalignment(label1, HPos.CENTER);
 
-        Label label2 = new Label(b.getTitle());
+        Label label2 = new Label(br.associatedBook.getTitle());
         label2.getStyleClass().add("userViewText");
         GridPane.setConstraints(label2, 1, 0);
         GridPane.setHalignment(label2, HPos.CENTER);
 
-        Label label3 = new Label(b.getAuthor());
+        Label label3 = new Label(br.associatedBook.getAuthor());
         label3.getStyleClass().add("userViewText");
         GridPane.setConstraints(label3, 2, 0);
         GridPane.setHalignment(label3, HPos.CENTER);
@@ -80,9 +87,9 @@ public class UserViewController {
         label4.setPadding(new Insets(2));
 
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        label4.setText(rental.getDeadline().format(formatters));
+        label4.setText(br.getDeadline().format(formatters));
 
-        if(rental.getDeadline().isBefore(LocalDateTime.now())){
+        if(LocalDateTime.now().isBefore(br.getDeadline())){
 
             label4.getStyleClass().add("success");
             label4.getStyleClass().add("alert-success");
@@ -104,8 +111,17 @@ public class UserViewController {
         GridPane.setConstraints(button, 4, 0);
         GridPane.setHalignment(button, HPos.CENTER);
 
+        double total = (double) Duration.between(br.getRentTimestamp(), br.getDeadline()).toMinutes();
+        double elapsed = (double) Duration.between(LocalDateTime.now(), br.getDeadline()).toMinutes();
+        double ratio =  (total-elapsed)/ total;
+        ProgressBar bar = new ProgressBar(ratio);
+        GridPane.setConstraints(bar, 5,0);
+        GridPane.setHalignment(bar, HPos.CENTER);
 
-        gridPane.getChildren().addAll(label1, label2, label3, label4, button);
+        bar.getStyleClass().addAll("progress-bar-primary", "progress-bar");
+
+
+        gridPane.getChildren().addAll(label1, label2, label3, label4, button, bar);
         return gridPane;
     }
 }

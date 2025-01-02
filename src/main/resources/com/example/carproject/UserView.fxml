@@ -14,7 +14,7 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.carproject.UserViewController"
-      prefHeight="400.0" prefWidth="600.0">
+      prefHeight="400.0" prefWidth="700.0">
     <HBox spacing="10" styleClass="toolbar">
         <!-- Logo -->
         <ImageView  fitWidth="32" fitHeight="32">
@@ -43,15 +43,6 @@
 
     </VBox>
 
-    <VBox>
-        <HBox styleClass="bookRentalPanel, alert, alert-info">
 
-            <Label text="1." styleClass="userViewText"/>
-            <Label text="Proces F. Kawka" styleClass="userViewText"/>
-            <Label text="28.12.2024" styleClass="userViewText"/>
-            <ProgressBar styleClass="progress-bar-primary" />
-            <Button styleClass="btn,btn-primary" text="Return"/>
-        </HBox>
-    </VBox>
 
 </VBox>
