@@ -132,6 +132,11 @@ public class UserViewController {
             BookDb.returnBook(br);
             updateData();
             updateView();
+            try {
+                returnSuccessPopup();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         GridPane.setConstraints(button, 4, 0);
@@ -150,6 +155,22 @@ public class UserViewController {
         gridPane.getChildren().addAll(label1, label2, label3, label4, button, bar);
         return gridPane;
     }
+
+    void returnSuccessPopup() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ReturnSuccessView.fxml"));
+        Parent root = loader.load();
+
+        //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     void switchToDesktop(User u, MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDesktopView.fxml"));

@@ -81,6 +81,7 @@ public class UserBrowseViewController
         record_container.getChildren().clear();
         for(Book b : books){
             //skip not available if checked.
+            //TODO write a function inside book that checks is it rented instead of rentalid != 0
             if(only_availab_checkbox.isSelected() && b.getRental_id() != 0){
                 continue;
             }

@@ -14,15 +14,15 @@
       fx:controller="com.example.carproject.CheckoutSuccessController"
       prefHeight="200.0" prefWidth="300.0"
       spacing="10"
-      alignment="CENTER">
+      alignment="CENTER" fx:id="container">
 
 
     <Label text="Zwrocono ksiazke" style="-fx-font-size: 20;"/>
 
     <TextFlow textAlignment="CENTER">
-        <Text text="Wladca Lewawu"/>
-        <Text text=" autorstwa "/>
-        <Text text="Kazimierz Wielki" style="-fx-font-weight: 700"/>
+        <Text text="tytul" fx:id="title_label"/>
+        <Text text=" autorstwa " />
+        <Text text="Kazimierz Wielki" style="-fx-font-weight: 700" fx:id="author_label"/>
     </TextFlow>
 
     <TextFlow textAlignment="CENTER">
@@ -39,6 +39,6 @@
     </TextFlow>
 
 
-    <Button text="Ok" styleClass="btn, btn-warning" style="-fx-padding: 10 0"/>
+    <Button text="Ok" styleClass="btn, btn-warning" style="-fx-padding: 10 0" fx:id="close_btn"/>
 
 </VBox>

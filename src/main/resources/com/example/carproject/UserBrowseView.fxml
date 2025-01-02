@@ -11,6 +11,7 @@
 <?import javafx.scene.text.TextFlow?>
 <?import org.kordamp.bootstrapfx.scene.layout.Panel?>
 <?import javafx.scene.text.Text?>
+
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.carproject.UserBrowseViewController"
