@@ -30,6 +30,9 @@ public class UserBrowseViewController
     public TextArea search_field;
     @FXML
     public CheckBox only_availab_checkbox;
+
+    public User user;
+
     //TODO: finish search buttons and improve the header label with the checkbox.
     //TODO: import icons for wypozycz and powiadom.
     //TODO: Idea - have a button that recommends you random non-occupied book. Also checkbox to see only non-occupied.
@@ -65,6 +68,45 @@ public class UserBrowseViewController
             record_container.getChildren().add(generateRecord(b));
         }
 
+    }
+
+    ArrayList<Book> borrowBook(Book b){
+        ArrayList<Book> result = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
+
+            //TODO: make time of rental based on points.
+            String query = "INSERT INTO book_rental (book_id, user_id, deadline) VALUES (?,?,strftime('%Y-%m-%d %H:%M:%S', 'now', '+1 month'))";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, b.getId());
+            stmt.setInt(2, user.getId());
+
+
+            int successfull_insert = stmt.executeUpdate();
+
+            if (successfull_insert > 0){
+                try(ResultSet rs = stmt.getGeneratedKeys()){
+                    if(rs.next()){
+                        int newId = rs.getInt(1);
+
+                        query = "UPDATE book SET rental_id = ? WHERE id = ?";
+                        try(PreparedStatement book_update_stmt = conn.prepareStatement(query) ) {
+
+                            book_update_stmt.setInt(1, newId);
+                            book_update_stmt.setInt(2, b.getId());
+                            book_update_stmt.executeUpdate();
+                        }
+                    }
+                }
+            }
+
+
+            System.out.println("Zapytanie insert: "+successfull_insert);
+
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return  result;
     }
 
     GridPane generateRecord(Book b){
@@ -131,7 +173,7 @@ public class UserBrowseViewController
         Button button = new Button();
         if(b.getRental_id() == 0){
             button.setText("Wypozycz");
-
+            button.setOnAction(event-> borrowBook(b));
         }
         else{
             button.setText("Powiadom");

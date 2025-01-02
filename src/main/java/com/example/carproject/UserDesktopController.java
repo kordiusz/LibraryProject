@@ -66,6 +66,7 @@ public class UserDesktopController
         // But it would be nice to have it.
         UserBrowseViewController browseController = loader.getController();
         browseController.fetchBooks();
+        browseController.user = user;
 
     }
 }
