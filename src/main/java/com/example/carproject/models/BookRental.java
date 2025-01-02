@@ -8,6 +8,14 @@ public class BookRental {
     private LocalDateTime rentTimestamp;
     private LocalDateTime deadline;
 
+    public BookRental(int id, int bookId, int userId, LocalDateTime rentTimestamp, LocalDateTime deadline) {
+        this.id = id;
+        this.bookId = bookId;
+        this.userId = userId;
+        this.rentTimestamp = rentTimestamp;
+        this.deadline = deadline;
+    }
+
     // Getters and Setters
     public int getId() {
         return id;

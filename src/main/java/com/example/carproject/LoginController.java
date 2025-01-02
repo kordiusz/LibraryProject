@@ -62,7 +62,8 @@ public class LoginController
                 Timestamp stamp = rs.getTimestamp("creation_timestamp");
                 int points = rs.getInt("points");
                 int rented_total = rs.getInt("total_rented");
-                return new User(id, name, surname, nickname, stamp.toLocalDateTime(), points, rented_total);
+                LoggedUser.current = new User(id, name, surname, nickname, stamp.toLocalDateTime(), points, rented_total);
+                return LoggedUser.current;
             }
 
 

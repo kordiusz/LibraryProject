@@ -65,8 +65,8 @@ public class UserDesktopController
         //TODO: no idea how to pass the data so its already in controller when initialize is executed.
         // But it would be nice to have it.
         UserBrowseViewController browseController = loader.getController();
-        browseController.fetchBooks();
-        browseController.user = user;
-
+        browseController.user = LoggedUser.current;
+        browseController.updateData();
+        browseController.updateView();
     }
 }

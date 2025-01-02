@@ -1,6 +1,7 @@
 package com.example.carproject;
 
 import com.example.carproject.models.Book;
+import com.example.carproject.models.BookRental;
 import com.example.carproject.models.User;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -15,13 +16,13 @@ import javafx.scene.layout.VBox;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserBrowseViewController
 {
 
 
     public ArrayList<Book> books;
+    public ArrayList<BookRental> rentals;
     @FXML
     public VBox record_container;
     @FXML
@@ -36,6 +37,7 @@ public class UserBrowseViewController
     //TODO: finish search buttons and improve the header label with the checkbox.
     //TODO: import icons for wypozycz and powiadom.
     //TODO: Idea - have a button that recommends you random non-occupied book. Also checkbox to see only non-occupied.
+
     @FXML
     public void initialize(){
         search_button.setOnAction(event->{
@@ -45,16 +47,41 @@ public class UserBrowseViewController
         only_availab_checkbox.setOnAction(event->{
             updateView();
         });
-        updateView();
     }
 
-    public UserBrowseViewController(){
-        updateData();
-    }
 
 
     public void updateData(){
         books = fetchBooks();
+        rentals = fetchMyRentals();
+    }
+
+    private ArrayList<BookRental> fetchMyRentals()
+    {
+        String query = "SELECT * FROM book_rental WHERE user_id=? LIMIT 15";
+        ArrayList<BookRental> result = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
+            PreparedStatement stmt = conn.prepareStatement(query) ;
+            stmt.setInt(1, user.getId());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("id");
+                int book_id = rs.getInt("book_id");
+                int user_id = rs.getInt("user_id");
+                Timestamp rent_stamp = rs.getTimestamp("rent_timestamp");
+                Timestamp deadline_stamp = rs.getTimestamp("deadline");
+
+                result.add(new BookRental(id,book_id,user_id,rent_stamp.toLocalDateTime(),deadline_stamp.toLocalDateTime()));
+            }
+
+
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return  result;
     }
 
     public void updateView(){
@@ -173,12 +200,23 @@ public class UserBrowseViewController
         Button button = new Button();
         if(b.getRental_id() == 0){
             button.setText("Wypozycz");
-            button.setOnAction(event-> borrowBook(b));
+            button.setOnAction(event->
+            {
+                borrowBook(b);
+                updateData();
+                updateView();
+            });
+            button.getStyleClass().add("btn-primary");
+        }
+        else if (rentals.stream().anyMatch(rental -> b.getId() == rental.getId())){
+            button.setText("Twoja :)");
+            button.getStyleClass().add("btn-warning");
         }
         else{
             button.setText("Powiadom");
+            button.getStyleClass().add("btn-default");
         }
-        button.getStyleClass().add("btn-primary");
+
         button.getStyleClass().add("btn");
 
         GridPane.setConstraints(button, 4, 0); // Kolumna 5, Wiersz 0
