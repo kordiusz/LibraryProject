@@ -7,6 +7,7 @@ public class BookRental {
     private int userId;
     private LocalDateTime rentTimestamp;
     private LocalDateTime deadline;
+    public Book associatedBook;
 
     public BookRental(int id, int bookId, int userId, LocalDateTime rentTimestamp, LocalDateTime deadline) {
         this.id = id;

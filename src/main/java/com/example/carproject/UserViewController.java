@@ -1,5 +1,6 @@
 package com.example.carproject;
 
+import com.example.carproject.DataAccess.BookDb;
 import com.example.carproject.models.Book;
 import com.example.carproject.models.BookRental;
 import javafx.fxml.FXML;
@@ -20,19 +21,17 @@ public class UserViewController {
 
     public VBox record_container;
 
-    ArrayList<BookRental> rentals;
-    ArrayList<Book> books;
-
-
+    ArrayList<BookRental> rented_books;
 
     @FXML
     public void initialize(){
+        rented_books = BookDb.fetchRichRentalsFor(LoggedUser.current);
+    }
+
+    public void updateView(){
 
     }
 
-    public void updateData(){
-
-    }
 
     GridPane generateRecord(BookRental rental, Book b){
 

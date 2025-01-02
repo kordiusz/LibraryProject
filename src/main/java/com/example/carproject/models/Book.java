@@ -9,7 +9,7 @@ public class Book {
     private int borrowCount;
     private LocalDate publishDate;
     private int rental_id;
-
+    ;
 
     public Book(int id, String title, String author, int borrowCount, LocalDate publishDate, int rental_id){
         this. id = id;

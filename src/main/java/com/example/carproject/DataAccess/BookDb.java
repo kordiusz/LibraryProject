@@ -70,8 +70,7 @@ public class BookDb
 
     }
 
-    public static ArrayList<BookRental> fetchRentalsFor(User user)
-    {
+    public static ArrayList<BookRental> fetchRentalsFor(User user){
         String query = "SELECT * FROM book_rental WHERE user_id=? LIMIT 15";
         ArrayList<BookRental> result = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
@@ -81,13 +80,55 @@ public class BookDb
 
             while (rs.next()) {
 
+
+
                 int id = rs.getInt("id");
                 int book_id = rs.getInt("book_id");
                 int user_id = rs.getInt("user_id");
                 Timestamp rent_stamp = rs.getTimestamp("rent_timestamp");
                 Timestamp deadline_stamp = rs.getTimestamp("deadline");
 
-                result.add(new BookRental(id,book_id,user_id,rent_stamp.toLocalDateTime(),deadline_stamp.toLocalDateTime()));
+                BookRental rental = new BookRental(id,book_id,user_id,rent_stamp.toLocalDateTime(),deadline_stamp.toLocalDateTime());
+                result.add(rental);
+            }
+
+
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return  result;
+    }
+
+
+    /*
+    * Combines Rentals with Book data.
+    * */
+    public static ArrayList<BookRental> fetchRichRentalsFor(User user)
+    {
+            String query = "SELECT author,title, borrow_count, publish_date,book_rental.id, user_id,book_id, rent_timestamp,deadline FROM Book  INNER JOIN book_rental ON Book.id = book_rental.book_id WHERE book_rental.user_id = ? LIMIT 15;";
+        ArrayList<BookRental> result = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
+            PreparedStatement stmt = conn.prepareStatement(query) ;
+            stmt.setInt(1, user.getId());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                Date date = rs.getDate("publish_date");
+                int borrow_count = rs.getInt("borrow_count");
+
+                int id = rs.getInt("id");
+                int book_id = rs.getInt("book_id");
+                int user_id = rs.getInt("user_id");
+                Timestamp rent_stamp = rs.getTimestamp("rent_timestamp");
+                Timestamp deadline_stamp = rs.getTimestamp("deadline");
+
+                BookRental rental = new BookRental(id,book_id,user_id,rent_stamp.toLocalDateTime(),deadline_stamp.toLocalDateTime());
+                rental.associatedBook = new Book(-1, title, author,  borrow_count, date.toLocalDate(),-1);
+                result.add(rental);
             }
 
 

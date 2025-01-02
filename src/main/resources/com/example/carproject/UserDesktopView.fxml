@@ -47,7 +47,7 @@
 
 
             <Button GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="btn, btn-primary" style="-fx-padding: 30" text="Przegladaj" fx:id="browse_btn"/>
-            <Button GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="btn, btn-primary" style="-fx-padding: 30" text="Wypozyczone"/>
+            <Button GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="btn, btn-primary" style="-fx-padding: 30" text="Wypozyczone" fx:id="borrow_btn"/>
         </GridPane>
         <TextFlow textAlignment="CENTER">
             <Text text="W sumie wypozyczyles "/>

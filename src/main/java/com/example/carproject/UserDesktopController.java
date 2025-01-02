@@ -26,6 +26,7 @@ public class UserDesktopController
     public Text rented_total_label;
     public Text timestamp_label;
     public Button browse_btn;
+    public Button borrow_btn;
 
     @FXML
     public void initialize(){
@@ -33,6 +34,14 @@ public class UserDesktopController
         browse_btn.setOnAction(event->{
             try {
                 switchToBrowse(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        borrow_btn.setOnAction(event->{
+            try{
+                switchToBorrowed(event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -68,5 +77,24 @@ public class UserDesktopController
         browseController.user = LoggedUser.current;
         browseController.updateData();
         browseController.updateView();
+    }
+
+    void switchToBorrowed(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserView.fxml"));
+        Parent root = loader.load();
+
+        //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+
+        stage.setScene(scene);
+        stage.show();
+
+        //TODO: no idea how to pass the data so its already in controller when initialize is executed.
+        // But it would be nice to have it.
+        UserViewController browseController = loader.getController();
     }
 }
