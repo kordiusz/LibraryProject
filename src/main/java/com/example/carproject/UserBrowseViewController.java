@@ -55,7 +55,7 @@ public class UserBrowseViewController
 
     public void updateData(){
         books = BookDb.fetchBooks();
-        rentals = BookDb.fetchRentalsFor(user);
+        LoggedUser.updateRentals();
     }
 
 
@@ -77,8 +77,6 @@ public class UserBrowseViewController
 
     GridPane generateRecord(Book b){
 
-        boolean isRentedByMe = false;
-        if (b.getRental_id() != 0) isRentedByMe = rentals.stream().anyMatch(rental -> b.getId() == rental.getBookId());
 
         GridPane gridPane = new GridPane();
 
@@ -129,7 +127,7 @@ public class UserBrowseViewController
             label4.getStyleClass().add("success");
             label4.getStyleClass().add("alert-success");
         }
-        else if (isRentedByMe){
+        else if (LoggedUser.isRentedByMe(b)){
             label4.setText("Twoj zbior");
             label4.getStyleClass().add("warning");
             label4.getStyleClass().add("alert-warning");
@@ -155,7 +153,7 @@ public class UserBrowseViewController
             });
             button.getStyleClass().add("btn-primary");
         }
-        else if (isRentedByMe){
+        else if (LoggedUser.isRentedByMe(b)){
             button.setText("Zwroc");
             button.getStyleClass().add("btn-primary");
         }

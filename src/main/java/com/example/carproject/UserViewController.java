@@ -23,6 +23,8 @@ public class UserViewController {
     ArrayList<BookRental> rentals;
     ArrayList<Book> books;
 
+
+
     @FXML
     public void initialize(){
 
@@ -36,9 +38,9 @@ public class UserViewController {
 
         GridPane gridPane = new GridPane();
 
-        // Ustawienia rozmiaru i widoczności linii
-        gridPane.setGridLinesVisible(false); // Ukrycie linii siatki
-        gridPane.setPadding(new Insets(10)); // Padding wokół siatki
+
+        gridPane.setGridLinesVisible(false);
+        gridPane.setPadding(new Insets(10));
 
         gridPane.getStyleClass().addAll("bookRentalPanel", "alert");
 
@@ -49,7 +51,7 @@ public class UserViewController {
         percent[2] = 30;
         percent[3] = 15;
         percent[4] = 20;
-        // Definiowanie kolumn z szerokościami procentowymi
+
         for (int i = 0; i < 5; i++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setPercentWidth(percent[i]);
@@ -64,12 +66,12 @@ public class UserViewController {
 
         Label label2 = new Label(b.getTitle());
         label2.getStyleClass().add("userViewText");
-        GridPane.setConstraints(label2, 1, 0); // Kolumna 1, Wiersz 0
+        GridPane.setConstraints(label2, 1, 0);
         GridPane.setHalignment(label2, HPos.CENTER);
 
         Label label3 = new Label(b.getAuthor());
         label3.getStyleClass().add("userViewText");
-        GridPane.setConstraints(label3, 2, 0); // Kolumna 2, Wiersz 0
+        GridPane.setConstraints(label3, 2, 0);
         GridPane.setHalignment(label3, HPos.CENTER);
 
 
@@ -83,7 +85,6 @@ public class UserViewController {
 
         if(rental.getDeadline().isBefore(LocalDateTime.now())){
 
-
             label4.getStyleClass().add("success");
             label4.getStyleClass().add("alert-success");
         }
@@ -92,19 +93,19 @@ public class UserViewController {
             label4.getStyleClass().add("alert-danger");
         }
 
-        GridPane.setConstraints(label4, 3, 0); // Kolumna 3, Wiersz 0
+        GridPane.setConstraints(label4, 3, 0);
         GridPane.setHalignment(label4, HPos.CENTER);
 
-        // Tworzenie przycisku i ustawianie właściwości
+
         Button button = new Button("Zwrot");
 
         button.getStyleClass().add("btn-primary");
         button.getStyleClass().add("btn");
 
-        GridPane.setConstraints(button, 4, 0); // Kolumna 5, Wiersz 0
+        GridPane.setConstraints(button, 4, 0);
         GridPane.setHalignment(button, HPos.CENTER);
 
-        // Dodawanie elementów do GridPane
+
         gridPane.getChildren().addAll(label1, label2, label3, label4, button);
         return gridPane;
     }
