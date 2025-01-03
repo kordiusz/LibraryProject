@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      prefHeight="400.0" prefWidth="600.0"
+      fx:controller="com.example.carproject.RulesController">
+
+    <HBox spacing="10" styleClass="toolbar">
+        <ImageView fitWidth="32" fitHeight="32" fx:id="logo_btn">
+            <Image url="@/Fox.svg.png"/>
+        </ImageView>
+
+        <!-- Title -->
+        <VBox alignment="CENTER_LEFT" styleClass="logo-text">
+            <Label text="LightLib" styleClass="h4 text-white" />
+        </VBox>
+
+        <!-- Spacer -->
+        <Region HBox.hgrow="ALWAYS" />
+
+
+    </HBox>
+    <Label text="Podstawowe zasady:" styleClass="h3"/>
+    <Label text="1. Istnieje jedna ksiazka w bazie." styleClass="p"/>
+    <Label text="2. Uzytkownik moze wypozyczyc max 3 ksiazki." styleClass="p"/>
+    <Label text="3. Za oddanie w terminie + 10, za oddanie po -20 pkt." styleClass="p"/>
+    <Label text="4. Defaultowo czas wypozyczenia to miesiac, kazdy punkt to jeden dzien dodatkowy az do max 100 pkt." styleClass="p"/>
+
+</VBox>

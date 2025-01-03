@@ -29,6 +29,7 @@ public class UserDesktopController
     public Button browse_btn;
     public Button borrow_btn;
     public ImageView logo_btn;
+    public Button rules_btn;
 
     @FXML
     public void initialize(){
@@ -48,6 +49,15 @@ public class UserDesktopController
                 throw new RuntimeException(e);
             }
         });
+
+        rules_btn.setOnAction(event->{
+            try {
+                SceneManager.switchView(event, "RulesView.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
     public void updateData(){
@@ -66,44 +76,16 @@ public class UserDesktopController
     }
 
     void switchToBrowse(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserBrowseView.fxml"));
-        Parent root = loader.load();
 
-        //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-
-        stage.setScene(scene);
-        stage.show();
-
-        //TODO: no idea how to pass the data so its already in controller when initialize is executed.
-        // But it would be nice to have it.
-        UserBrowseViewController browseController = loader.getController();
+        UserBrowseViewController browseController = SceneManager.switchView(event,"UserBrowseView.fxml");
         browseController.user = LoggedUser.current;
         browseController.updateData();
         browseController.updateView();
     }
 
     void switchToBorrowed(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserView.fxml"));
-        Parent root = loader.load();
 
-        //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-
-        stage.setScene(scene);
-        stage.show();
-
-        //TODO: no idea how to pass the data so its already in controller when initialize is executed.
-        // But it would be nice to have it.
-        UserViewController borrowedController = loader.getController();
+        UserViewController borrowedController = SceneManager.switchView(event, "UserView.fxml");
         borrowedController.updateView();
     }
 }

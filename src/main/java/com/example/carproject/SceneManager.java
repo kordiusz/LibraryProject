@@ -31,8 +31,8 @@ public class SceneManager
         return loader.getController();
     }
 
-    public static <T> T switchView(Event event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("UserDesktopView.fxml"));
+    public static <T> T switchView(Event event, String path) throws IOException {
+        FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(path));
         Parent root = loader.load();
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -63,7 +63,7 @@ public class SceneManager
 
     public static void switchToDesktop(User u, MouseEvent event) throws IOException {
 
-        UserDesktopController desktopController = SceneManager.switchView(event);
+        UserDesktopController desktopController = SceneManager.switchView(event, "UserDesktopView.fxml");
         desktopController.user = u;
         desktopController.updateData();
         desktopController.updateView();

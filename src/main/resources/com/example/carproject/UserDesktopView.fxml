@@ -59,7 +59,7 @@
         <Text text="..." styleClass="text-primary" fx:id="timestamp_label"/>
     </TextFlow>
         <Region prefHeight="10"/>
-    <Button text="Regulamin" styleClass="btn, btn-default"/>
+    <Button text="Regulamin" styleClass="btn, btn-default" fx:id="rules_btn"/>
     </VBox>
 
 </VBox>
