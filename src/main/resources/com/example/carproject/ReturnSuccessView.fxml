@@ -11,34 +11,16 @@
 <?import org.kordamp.bootstrapfx.scene.layout.Panel?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.carproject.CheckoutSuccessController"
+      fx:controller="com.example.carproject.ReturnSuccessController"
       prefHeight="200.0" prefWidth="300.0"
       spacing="10"
       alignment="CENTER" fx:id="container">
 
 
-    <Label text="Zwrocono ksiazke" style="-fx-font-size: 20;"/>
-
-    <TextFlow textAlignment="CENTER">
-        <Text text="tytul" fx:id="title_label"/>
-        <Text text=" autorstwa " />
-        <Text text="Kazimierz Wielki" style="-fx-font-weight: 700" fx:id="author_label"/>
-    </TextFlow>
-
-    <TextFlow textAlignment="CENTER">
-        <Text text="Oddano po terminie "/>
-        <Text text="28.02.2024 "/>
-
-    </TextFlow>
 
 
 
-    <TextFlow textAlignment="CENTER">
-        <Text text="Punkty: " styleClass="text-danger"/>
-        <Text text="-10" styleClass="text-danger"/>
-    </TextFlow>
 
 
-    <Button text="Ok" styleClass="btn, btn-warning" style="-fx-padding: 10 0" fx:id="close_btn"/>
 
 </VBox>

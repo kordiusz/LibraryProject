@@ -60,7 +60,7 @@ public class UserBrowseViewController
         });
         logo_btn.setOnMouseClicked(event->{
             try {
-                switchToDesktop(LoggedUser.current, event);
+                SceneManager.switchToDesktop(LoggedUser.current, event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -167,12 +167,30 @@ public class UserBrowseViewController
                 BookDb.borrowBook(b,user);
                 updateData();
                 updateView();
+                BookRental rental = BookDb.fetchRichRentalsFor(LoggedUser.current, b);
+
+                try {
+                    SceneManager. borrowSuccessPopup(rental);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
             button.getStyleClass().add("btn-primary");
         }
         else if (LoggedUser.isRentedByMe(b)){
             button.setText("Zwroc");
             button.getStyleClass().add("btn-primary");
+            button.setOnAction(event->{
+                BookRental rental = BookDb.fetchRichRentalsFor(LoggedUser.current, b);
+                BookDb.returnBook(rental);
+                try {
+                    SceneManager.returnSuccessPopup(rental);
+                }catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                updateData();
+                updateView();
+            });
         }
         else{
             button.setText("Powiadom");
@@ -189,27 +207,7 @@ public class UserBrowseViewController
         return gridPane;
     }
 
-    void switchToDesktop(User u, MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserDesktopView.fxml"));
-        Parent root = loader.load();
 
-        //TODO: Later on it would be better to have some form of scene manager, but for now its fine.
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
-
-        stage.setScene(scene);
-        stage.show();
-
-        //TODO: no idea how to pass the data so its already in controller when initialize is executed.
-        // But it would be nice to have it.
-        UserDesktopController desktopController = loader.getController();
-        desktopController.user = u;
-        desktopController.updateData();
-        desktopController.updateView();
-    }
 
 
 

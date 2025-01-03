@@ -140,6 +140,42 @@ public class BookDb
         return  result;
     }
 
+    public static BookRental fetchRichRentalsFor(User user, Book book)
+    {
+        String query = "SELECT author,title, borrow_count, publish_date,book_rental.id, user_id,book_id, rent_timestamp,deadline FROM Book  INNER JOIN book_rental ON Book.id = book_rental.book_id WHERE book_rental.user_id = ? AND book.id = ? LIMIT 15;";
+        ArrayList<BookRental> result = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
+            PreparedStatement stmt = conn.prepareStatement(query) ;
+            stmt.setInt(1, user.getId());
+            stmt.setInt(2, book.getId());
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                Date date = rs.getDate("publish_date");
+                int borrow_count = rs.getInt("borrow_count");
+
+                int id = rs.getInt("id");
+                int book_id = rs.getInt("book_id");
+                int user_id = rs.getInt("user_id");
+                Timestamp rent_stamp = rs.getTimestamp("rent_timestamp");
+                Timestamp deadline_stamp = rs.getTimestamp("deadline");
+
+                BookRental rental = new BookRental(id,book_id,user_id,rent_stamp.toLocalDateTime(),deadline_stamp.toLocalDateTime());
+                rental.associatedBook = new Book(book_id, title, author,  borrow_count, date.toLocalDate(),id);
+                return rental;
+            }
+
+
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return  null;
+    }
+
     public static ArrayList<Book> borrowBook(Book b, User user){
         ArrayList<Book> result = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
@@ -208,6 +244,7 @@ public class BookDb
     }
 
     public static boolean returnInTime(LocalDateTime deadline){return LocalDateTime.now().isBefore(deadline);}
+
 
     public static void returnBook(BookRental br){
 

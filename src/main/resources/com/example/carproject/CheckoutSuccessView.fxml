@@ -14,22 +14,7 @@
       fx:controller="com.example.carproject.CheckoutSuccessController"
       prefHeight="200.0" prefWidth="300.0"
       spacing="10"
-      alignment="CENTER">
+      alignment="CENTER" fx:id="container">
 
-
-        <Label text="Udalo sie wypozyczyc ksiazke" style="-fx-font-size: 20;"/>
-
-        <TextFlow textAlignment="CENTER">
-            <Text text="Wladca Lewawu"/>
-            <Text text=" autorstwa "/>
-            <Text text="Kazimierz Wielki" style="-fx-font-weight: 700"/>
-        </TextFlow>
-
-        <TextFlow textAlignment="CENTER">
-            <Text text="Termin oddania: "/>
-            <Text text="28.02.2024"/>
-        </TextFlow>
-
-        <Button text="Ok" styleClass="btn, btn-warning" style="-fx-padding: 10 0"/>
 
 </VBox>
