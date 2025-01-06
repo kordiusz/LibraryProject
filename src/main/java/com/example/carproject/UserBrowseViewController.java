@@ -195,6 +195,13 @@ public class UserBrowseViewController
         else{
             button.setText("Powiadom");
             button.getStyleClass().add("btn-default");
+            button.setOnAction(event->{
+                try {
+                    SceneManager.makePopup("ReminderSetView.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
 
         button.getStyleClass().add("btn");
