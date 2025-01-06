@@ -255,15 +255,16 @@ public class BookDb
         try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
 
             //TODO: probably could delete rental_id from books since can just join two tables.
-            String query = "DELETE FROM book_rental WHERE user_id = ?; ";
+            String query = "DELETE FROM book_rental WHERE user_id = ? AND book_id = ?; ";
             PreparedStatement deleteRental = conn.prepareStatement(query);
             deleteRental.setInt(1, br.getUserId());
+            deleteRental.setInt(2, br.getBookId());
 
             deleteRental.executeUpdate();
 
             query = "UPDATE book SET rental_id = 0,borrow_count = borrow_count + 1  WHERE id=?;";
             PreparedStatement updateBook = conn.prepareStatement(query);
-            updateBook.setInt(1,br.associatedBook.getId());
+            updateBook.setInt(1,br.getBookId());
 
             updateBook.executeUpdate();
 
