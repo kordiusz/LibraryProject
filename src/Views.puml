@@ -1,0 +1,53 @@
+@startuml
+skinparam lifelineBackgroundColor #E5E5E5
+skinparam sequence {
+    LifeLineBorderColor black
+    LifeLineBackgroundColor #FFFFFF
+    ArrowColor black
+    ActorBorderColor black
+    ActorBackgroundColor #E5E5E5
+}
+
+actor Uzytkownik
+
+Uzytkownik -> Logowanie : Start aplikacji
+activate Logowanie
+
+Logowanie -> Logowanie : Wprowadzenie danych logowania
+Logowanie -> MenuGlowne: Zalogowanie
+deactivate Logowanie
+activate Pulpit
+
+Pulpit -> MenuGlowne : Wyświetlenie menu głównego
+activate MenuGlowne
+
+MenuGlowne -> PrzegladanieKsiazek : Kliknięcie "Przeglądaj książki"
+deactivate MenuGlowne
+activate PrzegladanieKsiazek
+
+PrzegladanieKsiazek -> ListaKsiazek : Wyświetlenie listy książek
+activate ListaKsiazek
+ListaKsiazek -> SzczegolyKsiazki : Kliknięcie na książkę
+activate SzczegolyKsiazki
+SzczegolyKsiazki --> ListaKsiazek : Powrót
+deactivate SzczegolyKsiazki
+ListaKsiazek --> Pulpit : Powrót do pulpitu
+deactivate ListaKsiazek
+deactivate PrzegladanieKsiazek
+activate MenuGlowne
+
+MenuGlowne -> MojeWypozyczenia : Kliknięcie "Moje wypożyczenia"
+deactivate MenuGlowne
+activate MojeWypozyczenia
+
+MojeWypozyczenia -> ListaWypozyczen : Wyświetlenie listy wypożyczeń
+activate ListaWypozyczen
+ListaWypozyczen --> Pulpit : Powrót do pulpitu
+deactivate ListaWypozyczen
+deactivate MojeWypozyczenia
+
+Pulpit -> Logowanie : Kliknięcie "Wyloguj"
+deactivate Pulpit
+activate Logowanie
+
+@enduml
