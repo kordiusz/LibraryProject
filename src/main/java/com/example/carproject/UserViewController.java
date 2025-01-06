@@ -144,7 +144,7 @@ public class UserViewController {
 
         double total = (double) Duration.between(br.getRentTimestamp(), br.getDeadline()).toMinutes();
         double elapsed = (double) Duration.between(LocalDateTime.now(), br.getDeadline()).toMinutes();
-        double ratio =  (total-elapsed)/ total;
+        double ratio =  Math.abs((total-elapsed)/ total);
         ProgressBar bar = new ProgressBar(ratio);
         GridPane.setConstraints(bar, 5,0);
         GridPane.setHalignment(bar, HPos.CENTER);
