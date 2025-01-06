@@ -7,6 +7,7 @@ import com.example.carproject.models.BookRental;
 import com.example.carproject.models.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -181,10 +182,12 @@ public class BookDb
         try (Connection conn = DriverManager.getConnection(StartApplication.db_url)){
 
             //TODO: make time of rental based on points.
-            String query = "INSERT INTO book_rental (book_id, user_id, deadline) VALUES (?,?,strftime('%Y-%m-%d %H:%M:%S', 'now', '+1 month'))";
+            String query = "INSERT INTO book_rental (book_id, user_id, deadline) VALUES (?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, b.getId());
             stmt.setInt(2, user.getId());
+            LocalDate deadline = LocalDate.now().plusDays(LibraryRules.getBorrowPeriodLength(user.getPoints()));
+            stmt.setDate(3, Date.valueOf(deadline));
 
 
             int successfull_insert = stmt.executeUpdate();
@@ -263,9 +266,11 @@ public class BookDb
 
             updateBook.executeUpdate();
 
-            query = "UPDATE user SET points = points + ?, total_rented = total_rented + 1 WHERE id=?;";
+            query = "UPDATE user SET points = ?, total_rented = total_rented + 1 WHERE id=?;";
             PreparedStatement updatePoints = conn.prepareStatement(query);
-            updatePoints.setInt(1,LibraryRules.pointsForReturn(returnInTime(br.getDeadline())));
+            int points = LoggedUser.current.getPoints() + LibraryRules.pointsForReturn(returnInTime(br.getDeadline()));
+            points = Math.min(points, 100);
+            updatePoints.setInt(1,points);
             updatePoints.setInt(2, br.getUserId());
 
             updatePoints.executeUpdate();

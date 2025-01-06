@@ -48,6 +48,7 @@ public class ReturnSuccessController{
         text2.setText(rental.getDeadline().format(formatters));
         textFlow1.getChildren().addAll(text1, text2);
 
+        Label label1 = new Label("Dzieki punktom wynik jest przedluzony o " +  LoggedUser.current.getPoints()+" dni.");
 
 
         //<Button text="Ok" styleClass="btn, btn-warning" style="-fx-padding: 10 0" fx:id="close_btn"/>
@@ -60,6 +61,6 @@ public class ReturnSuccessController{
             stage.close();
         });
 
-        container.getChildren().addAll(label,info, textFlow1, closeButton);
+        container.getChildren().addAll(label,info, textFlow1, label1, closeButton);
     }
 }

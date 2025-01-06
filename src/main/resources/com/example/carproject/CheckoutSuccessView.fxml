@@ -12,8 +12,8 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.carproject.CheckoutSuccessController"
-      prefHeight="200.0" prefWidth="300.0"
       spacing="10"
+      prefHeight="200.0" prefWidth="400.0"
       alignment="CENTER" fx:id="container">
 
 

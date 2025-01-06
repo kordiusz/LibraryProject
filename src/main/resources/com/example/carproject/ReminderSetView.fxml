@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.carproject.ReminderSetViewController"
             alignment="CENTER"
-            prefHeight="200.0" prefWidth="300.0"
+            prefHeight="200.0" prefWidth="400.0"
             spacing="10">
 
 
