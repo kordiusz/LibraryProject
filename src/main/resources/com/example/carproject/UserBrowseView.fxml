@@ -15,7 +15,8 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.carproject.UserBrowseViewController"
-      prefHeight="400.0" prefWidth="700.0">
+      prefHeight="400.0" prefWidth="750.0"
+spacing="10">
     <HBox spacing="10" styleClass="toolbar">
         <ImageView fitWidth="32" fitHeight="32" fx:id="logo_btn">
             <Image url="@/Fox.svg.png"/>
@@ -35,18 +36,19 @@
     </HBox>
 
 
-        <Label text="Lista ksiazek w bibliotece: " styleClass="h3" style="-fx-padding: 10 0 10 0"  alignment="BASELINE_LEFT" />
+        <Label text="Lista ksiazek w bibliotece: " styleClass="h3"  alignment="BASELINE_LEFT" />
 
-        <CheckBox text="Tylko dostepne" fx:id="only_availab_checkbox"/>
-
-
+        <CheckBox text="Tylko dostepne" fx:id="only_availab_checkbox" />
 
 
-    <VBox fx:id="record_container" spacing="2" style="-fx-padding: 2 0 0 0">
 
+
+    <ScrollPane styleClass="scroll" >
+    <VBox fx:id="record_container" spacing="2" style="-fx-padding: 2 0 0 0" >
     <!-- Content is generated here via code -->
 
     </VBox>
+    </ScrollPane>
 
 
 </VBox>

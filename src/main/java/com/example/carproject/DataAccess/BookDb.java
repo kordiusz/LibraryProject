@@ -246,6 +246,7 @@ public class BookDb
         return  result;
     }
 
+    //helper
     public static boolean returnInTime(LocalDateTime deadline){return LocalDateTime.now().isBefore(deadline);}
 
 

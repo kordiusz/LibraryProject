@@ -32,3 +32,11 @@
     -fx-border-width: 2; /* Border width */
     -fx-border-color: black; /* Border color */
 }
+
+.scroll{
+    -fx-border-width: 2 0 0 0; /* Border width */
+    -fx-border-color: black; /* Border color */
+    -fx-border-style: dashed;
+    -fx-padding: 0;
+}
+
