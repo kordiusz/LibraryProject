@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.carproject.ReminderSetViewController"
-            alignment="CENTER"
-            prefHeight="200.0" prefWidth="400.0"
-            spacing="10">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.carproject.CannotBorrowViewController"
+      alignment="CENTER"
+      prefHeight="200.0" prefWidth="400.0"
+      spacing="10">
 
 
-    <Label styleClass="h5" text="Dodano powiadomienie."/>
+    <Label styleClass="h5" text="Maksymalnie Mozesz wypozyczyc 3 ksiazki."/>
     <Button styleClass="btn,btn-warning" style="-fx-padding: 10" text="Ok" fx:id="close_btn"/>
 </VBox>

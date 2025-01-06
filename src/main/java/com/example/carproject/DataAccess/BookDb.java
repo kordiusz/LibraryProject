@@ -280,4 +280,20 @@ public class BookDb
             System.out.println(e.getMessage());
         }
     }
+
+    public static int countBorrowedBooks(User u) throws SQLException {
+
+        try(Connection conn = DriverManager.getConnection(StartApplication.db_url)){
+            String query = "SELECT COUNT(*) AS total_books FROM book_rental WHERE book_rental.user_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1,u.getId());
+            stmt.execute();
+
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return  rs.getInt("total_books");
+            }
+        }
+        return  -1;
+    }
 }

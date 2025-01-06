@@ -1,6 +1,7 @@
 package com.example.carproject;
 
 import com.example.carproject.DataAccess.BookDb;
+import com.example.carproject.DataAccess.LibraryRules;
 import com.example.carproject.models.Book;
 import com.example.carproject.models.BookRental;
 import com.example.carproject.models.User;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -164,13 +166,24 @@ public class UserBrowseViewController
             button.setText("Wypozycz");
             button.setOnAction(event->
             {
-                BookDb.borrowBook(b,user);
+                try {
+                    if(BookDb.countBorrowedBooks(user) >= LibraryRules.maxBorrowedAtTheSameTime){
+                        SceneManager.makePopup("CannotBorrowView.fxml");
+                        return;
+                    }
+
+                    BookDb.borrowBook(b,user);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 updateData();
                 updateView();
                 BookRental rental = BookDb.fetchRichRentalsFor(LoggedUser.current, b);
 
                 try {
-                    SceneManager. borrowSuccessPopup(rental);
+                    SceneManager.borrowSuccessPopup(rental);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

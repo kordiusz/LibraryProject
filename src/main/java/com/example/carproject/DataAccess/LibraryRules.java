@@ -1,5 +1,7 @@
 package com.example.carproject.DataAccess;
 
+import com.example.carproject.models.User;
+
 public class LibraryRules
 {
 
